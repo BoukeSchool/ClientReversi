@@ -1,0 +1,174 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f4f4f4;
+  font-family: Arial;
+  line-height: 1.6;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  color: #444444;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.button1 {
+  color: black;
+  border: 2px solid #4CAF50;
+  animation-delay: 3s;
+  animation: twist 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes twist {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1, 0.8);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+.button2 {
+  color: black;
+  border: 2px solid white;
+}
+
+@media screen and (max-width: 600px) {
+  .iconsm {
+    display: none;
+  }
+}
+@media screen and (max-width: 600px) {
+  .textsm {
+    font-size: 8px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .btnsm {
+    width: 100px;
+  }
+}
+
+.tegel{
+  /*student uitwerking*/
+  display: inline-block;
+  border: 1px solid lightgrey;
+  width: 100px;
+  height: 100px;
+}
+
+.blur{
+  backdrop-filter: blur(10px);
+  filter: blur(4px);
+  transition: 0.5s ease;
+}
+
+.fiche{
+  height: 100px;
+  width: 100px;
+  box-shadow: 0 8px 20px -4px #a6a4a4;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.fiche-zwart {
+  animation: putFicheZwart 1s;
+  background:
+          radial-gradient(black 15%, transparent 16%) 0 0,
+          radial-gradient(black 15%, transparent 16%) 8px 8px,
+          radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+          radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+  background-color:#282828;
+  background-size:16px 16px;
+}
+
+.fiche-wit{
+  animation: putFicheWit 1s;
+  background-color:silver;
+  background-image:
+          radial-gradient(circle at 100% 150%, silver 24%, white 24%, white 28%, silver 28%, silver 36%, white 36%, white 40%, transparent 40%, transparent),
+          radial-gradient(circle at 0    150%, silver 24%, white 24%, white 28%, silver 28%, silver 36%, white 36%, white 40%, transparent 40%, transparent),
+          radial-gradient(circle at 50%  100%, white 10%, silver 10%, silver 23%, white 23%, white 30%, silver 30%, silver 43%, white 43%, white 50%, silver 50%, silver 63%, white 63%, white 71%, transparent 71%, transparent),
+          radial-gradient(circle at 100% 50%, white 5%, silver 5%, silver 15%, white 15%, white 20%, silver 20%, silver 29%, white 29%, white 34%, silver 34%, silver 44%, white 44%, white 49%, transparent 49%, transparent),
+          radial-gradient(circle at 0    50%, white 5%, silver 5%, silver 15%, white 15%, white 20%, silver 20%, silver 29%, white 29%, white 34%, silver 34%, silver 44%, white 44%, white 49%, transparent 49%, transparent);
+  background-size: 100px 50px;
+}
+
+.fade-in-fbw {
+  background-color: #d0ffd0;
+  opacity: 0;
+  padding: 20px;
+  animation: fadeIn 3s;
+  animation-delay: 2s;
+  animation-fill-mode: forwards;
+}
+
+.fade-in-fbw2 {
+  opacity: 0;
+  animation: fadeOut 0.5s;
+}
+
+@keyframes putFicheZwart {
+  0% {
+    opacity: 0;
+    transform : translateY(3em)
+  }
+  40% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+    transform : translateY(0em)
+  }
+}
+
+@keyframes putFicheWit {
+  0% {
+    opacity: 0;
+    transform : translateY(-3em)
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform : translateY(0em)
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0, 0);
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

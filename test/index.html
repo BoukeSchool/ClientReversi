@@ -1,0 +1,74 @@
+<html>
+<head>
+<link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine/jasmine_favicon.png">
+<link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine/jasmine.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine/jasmine.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine/jasmine-html.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine/boot.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="../js/feedbackWidget.js"></script>
+<script type="text/javascript" src="../js/game.js"></script>
+
+</head>
+<body>
+
+<script>
+
+
+
+describe("A suite", function() {
+  it("contains spec with an expectation", function() {
+    expect(true).toBe(true);
+  });
+});
+
+describe("Application initialisation", function() {
+  it("Method init returns true", function() {
+  	const result = myApp.init();
+    expect(result).toBe(true);
+  });
+});
+
+describe("Hide Widget", function() {
+
+    beforeAll(function(done) {
+        $(function(){
+            done();
+        });
+    });
+
+    it("DOM element exists", function() {
+        expect(document.getElementById("feedback-success")).toBeDefined();
+    });
+    it("Is hidden", function() {
+        expect(show()).toBe("block");
+    });
+});
+
+describe("Game", function() {
+    it("Game is available in global scope", function() {
+        expect(Game).toBeDefined();
+    })
+    it("Game has init function", function() {
+        expect(Game.init).toBeDefined();
+    })
+    it("Game.Data has init function", function() {
+        expect(Game.Data.init).toBeDefined();
+    })
+    it("Game.Model has init function", function() {
+        expect(Game.Model.init).toBeDefined();
+    })
+})
+// describe("Game", function() {
+//     it("Game has init function", function() {
+//         expect(Game.init).toBeDefined();
+//     })
+// })
+
+</script>
+
+
+</body>
+</html>

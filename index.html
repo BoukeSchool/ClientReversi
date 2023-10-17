@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript getting started</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="dist/js/vendor/vendor.js"></script>
+    <script src="dist/js/templates.js"></script>
+    <script src="js/feedbackWidget.js"></script>
+    <script src="js/game.js"></script>
+
+</head>
+
+<body>
+
+
+<section id="feedback-success" class="alert alert-success" role="alert" style="display:none">
+    <p>Veel succes met deze module!</p>
+</section>
+
+<section id="feedback-danger" class="alert alert-danger" role="alert" style="display:none">
+    <p>Pas op voor loslopende bits.</p>
+</section>
+
+<section id ="fbw" class="fade-in-fbw" style="display: inline-flex; border-radius: 10px" >
+    <section>
+        <i class="glyphicon glyphicon-ok iconsm"></i>
+        <p class="textsm">Someone wants to join your game. Accept?</p>
+    </section>
+
+    <section class="btnsm">
+        <button type="button" id="OKKnop" class="button button1">OK</button>
+        <button type="button" id="WeigerKnop" class="button button2">Weigeren</button>
+    </section>
+
+</section>
+
+<script>
+
+    function afterInit() {
+        const tegels = document.querySelectorAll('.tegel');
+
+        tegels.forEach(box => {
+            box.addEventListener('click', function handleClick(event) {
+                Game.Reversi.showFiche(event)
+            });
+        });
+        Game.Reversi.updateBord();
+        console.log('Game init voltooid');
+    }
+
+    const url = "/api/Spel/";
+    // const promise = $.get(url);
+    // console.log(promise);
+    $.get(url).then(function(responseData){
+        console.log("afterinit:" + responseData);
+    });
+    // // Game.Data.get(url).then(data => console.log(data));
+    // Game.Model.getWeather(url).then(data => console.log(data));
+</script>>
+
+</body>
+</html>
