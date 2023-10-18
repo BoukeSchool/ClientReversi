@@ -84,7 +84,7 @@ Game.Reversi = (function () {
 
     const updateBord = () => {
         return new Promise((resolve, reject) => {
-            fetch(`https://localhost:5001/api/Spel/Bord/${spelToken}`).then((response) => {
+            fetch(`/api/Spel/Bord/${spelToken}`).then((response) => {
                 response.json().then((response) => {
                     resolve(Game.Template.parseTemplate("speelbord", response))
                     // let witteTegelTeller = 0;
@@ -267,7 +267,7 @@ Game.Model = (function () {
     }
 
     const _getGameState = function () {
-        Game.Data.get(`https://localhost:5001/api/Spel/Beurt/${spelToken}`).then(
+        Game.Data.get(`/api/Spel/Beurt/${spelToken}`).then(
             function (response) {
                 if (response !== 0 && response !== 1 && response !== 2) {
                     throw new Error("The token is out of bounds");
