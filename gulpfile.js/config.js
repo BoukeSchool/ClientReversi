@@ -15,7 +15,7 @@ module.exports = {
             'vendor/*.js'
         ],
         templates : [
-            'templates/*/[^_]*.hbs'
+            'templates/*/[^_]*.hbs',
         ],
         partials : [
             'templates/partials/**/_*.hbs'

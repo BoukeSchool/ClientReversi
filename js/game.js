@@ -11,6 +11,7 @@ let spelBeurt = 2
 
 let connection = new signalR.HubConnectionBuilder().withUrl("/signalRHub").build();
 
+
 //wordt elke keer aangeroepen wanneer er een zet wordt gedaan
 connection.on("ReceiveMessage", function (success, result) {
 
@@ -29,7 +30,7 @@ connection.on("ReceiveMessage", function (success, result) {
                 }
 
                 $("#bord").addClass("blur")
-                document.getElementById("TerugKnop").style.display = "block"
+                //document.getElementById("TerugKnop").style.display = "block"
                 document.getElementById("tellen").textContent = `The game has ended. ${eindeSpelTekst}`
                 connection.invoke("EndGame", spelToken, gewonnen).catch(function (err) {
                     return console.error(err.toString());
@@ -41,11 +42,18 @@ connection.on("ReceiveMessage", function (success, result) {
     }
 });
 
+connection.on("UpdateConnectedUsers", function (users) {
+    Game.Reversi.updateUserListUI(users);
+});
+
 connection.start().then(function () {
     connection.invoke("JoinRoom", spelToken).catch(function (err) {
         return console.error(err.toString());
     })
     console.log("connection is gestart")
+    connection.invoke("GetConnectedUsers").then(function (users) {
+        Game.Reversi.updateUserListUI(users);
+    });
 }).catch(function (err) {
     return console.error(err.toString());
 });
@@ -82,53 +90,65 @@ Game.Reversi = (function () {
         apiUrl: "/api/url"
     }
 
+    function updateUserListUI(users){
+        document.getElementById("speler1").textContent = users[0]
+        users.length > 1 ?
+            document.getElementById("speler2").textContent = users[1]
+            : document.getElementById("speler2").textContent = "-"
+        console.log("dit: " + users[0])
+    }
+
+    function handleLeaveClick(event) {
+
+    }
+
     const updateBord = () => {
         return new Promise((resolve, reject) => {
             fetch(`https://localhost:5001/api/Spel/Bord/${spelToken}`).then((response) => {
                 response.json().then((response) => {
                     resolve(Game.Template.parseTemplate("speelbord", response))
-                    // let witteTegelTeller = 0;
-                    // let zwarteTegelTeller = 0;
-                    // let rijteller = 0;
-                    // response.forEach(item => {
-                    //     let kolomteller = 0;
-                    //     item.forEach(item => {
-                    //         if (item !== 0) {
-                    //
-                    //             let element = document.getElementById(`${rijteller},${kolomteller}`)
-                    //             if (element.classList.contains("fiche")) {
-                    //                 if (element.classList.contains("fiche-wit")) {
-                    //                     element.classList.remove("fiche-wit")
-                    //                 } else if (element.classList.contains("fiche-zwart")) {
-                    //                     element.classList.remove("fiche-zwart")
-                    //                 }
-                    //             } else {
-                    //                 element.classList.add("fiche")
-                    //             }
-                    //             if (item === 1) {
-                    //                 witteTegelTeller++
-                    //                 element.classList.add("fiche-wit")
-                    //             } else {
-                    //                 zwarteTegelTeller++
-                    //                 element.classList.add("fiche-zwart")
-                    //             }
-                    //         }
-                    //         kolomteller++
-                    //     })
-                    //     kolomteller = 0;
-                    //     rijteller++
-                    // })
-                    //
-                    //
-                    // beurtWisselen(witteTegelTeller + zwarteTegelTeller)
-                    // if (witteTegelTeller > zwarteTegelTeller) {
-                    //     resolve(1)
-                    // }
-                    // if (zwarteTegelTeller > witteTegelTeller) {
-                    //     resolve(2)
-                    // } else {
-                    //     resolve(0)
-                    // }
+                    let witteTegelTeller = 0;
+                    let zwarteTegelTeller = 0;
+                    let rijteller = 0;
+                    response.forEach(item => {
+                        let kolomteller = 0;
+                        item.forEach(item => {
+                            if (item !== 0) {
+
+                                let element = document.getElementById(`${rijteller},${kolomteller}`)
+                                if (element.classList.contains("fiche")) {
+                                    if (element.classList.contains("fiche-wit")) {
+                                        element.classList.remove("fiche-wit")
+                                    } else if (element.classList.contains("fiche-zwart")) {
+                                        element.classList.remove("fiche-zwart")
+                                    }
+                                } else {
+                                    element.classList.add("fiche")
+                                }
+                                if (item === 1) {
+                                    witteTegelTeller++
+                                    element.classList.add("fiche-wit")
+                                } else {
+                                    zwarteTegelTeller++
+                                    element.classList.add("fiche-zwart")
+                                }
+                            }
+                            kolomteller++
+                        })
+                        kolomteller = 0;
+                        rijteller++
+                    })
+
+
+                    beurtWisselen(witteTegelTeller + zwarteTegelTeller)
+                    if (witteTegelTeller > zwarteTegelTeller) {
+                        resolve(1)
+                    }
+                    if (zwarteTegelTeller > witteTegelTeller) {
+                        resolve(2)
+                    } else {
+                        resolve(0)
+                    }
                 })
             })
         })
@@ -149,6 +169,7 @@ Game.Reversi = (function () {
 
 
         const tegels = document.querySelectorAll('.tegel');
+
         if (kleur === spelBeurt) {
 
             tegels.forEach(box => {
@@ -189,6 +210,7 @@ Game.Reversi = (function () {
     // Waarde/object geretourneerd aan de outer scope
     return {
         init: privateInit,
+        updateUserListUI: updateUserListUI,
         showFiche: showFiche,
         updateBord: updateBord,
         beurtWisselen: beurtWisselen,
