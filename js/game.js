@@ -11,6 +11,23 @@ let spelBeurt = 2
 
 let connection = new signalR.HubConnectionBuilder().withUrl("/signalRHub").build();
 
+function handleClick(event) {
+    Game.Reversi.showFiche(event);
+}
+
+function afterInit(spelId, userToken, spelerToken) {
+    spelToken = spelId;
+
+    if (userToken === spelerToken) {
+        kleur = 2;
+    }
+
+    Game.Reversi.updateBord();
+    Game.Stats.init();
+
+    console.log(spelToken);
+    console.log('Game init voltooid');
+}
 
 //wordt elke keer aangeroepen wanneer er een zet wordt gedaan
 connection.on("ReceiveMessage", function (success, result) {
@@ -72,7 +89,7 @@ const Game = (function (url) {
 
     // Private function init
     const privateInit = function (callback) {
-        callback();
+        //callback();
         window.setInterval(_getCurrentGameState, 5000);
     }
 
@@ -96,10 +113,6 @@ Game.Reversi = (function () {
             document.getElementById("speler2").textContent = users[1]
             : document.getElementById("speler2").textContent = "-"
         console.log("dit: " + users[0])
-    }
-
-    function handleLeaveClick(event) {
-
     }
 
     const updateBord = () => {
