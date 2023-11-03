@@ -15,7 +15,10 @@ function handleClick(event) {
     Game.Reversi.showFiche(event);
 }
 
-function afterInit(spelId, userToken, spelerToken) {
+function afterInit() {
+    let spelId = document.getElementById('modelId').getAttribute('data-my-value');
+    let userToken = document.getElementById('userName').getAttribute('data-my-value');
+    let spelerToken = document.getElementById('spelerToken').getAttribute('data-my-value');
     spelToken = spelId;
 
     if (userToken === spelerToken) {
@@ -89,7 +92,7 @@ const Game = (function (url) {
 
     // Private function init
     const privateInit = function (callback) {
-        //callback();
+        callback();
         window.setInterval(_getCurrentGameState, 5000);
     }
 
